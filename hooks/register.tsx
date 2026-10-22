@@ -10,6 +10,11 @@ const model = atom({ plugin: 'usage-band', key: 'model' } as const, '')
 const LABELS: Record<string, string> = { five_hour: '5h', seven_day: 'Week' }
 const WIDTH = 10
 
+// Light green while there is room, yellow as the window runs low, red near its end.
+function colorFor(percent: number): string {
+  return percent >= 90 ? 'red' : percent >= 70 ? 'yellow' : 'greenBright'
+}
+
 function bar(percent: number): string {
   const filled = Math.max(0, Math.min(WIDTH, Math.round((percent / 100) * WIDTH)))
   return '█'.repeat(filled) + '░'.repeat(WIDTH - filled)
@@ -83,7 +88,7 @@ export const register: Register = on => {
       <Box gap={4}>
         {current ? <Text key="model" bold>{modelName(current)}</Text> : null}
         {shown.map(l => (
-          <Text key={l.kind} color={l.percentUsed >= 90 ? 'red' : l.percentUsed >= 70 ? 'yellow' : undefined} dimColor={l.percentUsed < 70}>
+          <Text key={l.kind} color={colorFor(l.percentUsed)}>
             {LABELS[l.kind]} {bar(l.percentUsed)} {Math.round(l.percentUsed)}%{until(l.resetsAt, at)}
           </Text>
         ))}

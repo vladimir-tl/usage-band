@@ -9,7 +9,7 @@ Opus 5.5    5h █░░░░░░░░░ 6% · resets in 50m    Week ██
 ```
 
 The figures are the ones the status line uses. They refresh after each response
-and every minute; a window turns yellow from 70% and red from 90%. Without a
+and every minute; each window is light green, turns yellow from 70% and red from 90%. Without a
 subscription there are no limit windows, so only the model is shown.
 
 ## Install
